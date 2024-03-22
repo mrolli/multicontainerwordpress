@@ -1,0 +1,12 @@
+[
+  {
+    "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+    "slotSetting": false,
+    "value": "TRUE"
+  },
+  {
+    "name": "WP_REDIS_HOST",
+    "slotSetting": false,
+    "value": "redis"
+  }
+]
