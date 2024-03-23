@@ -9,5 +9,8 @@ script_dir="$(
 # Source bash script utilities
 source "${script_dir}/vars.sh"
 
-# Create a resource group
-az group delete --name "$resourceGroup"
+# Delete the resource group and all resources within it
+if az group show --name "$resourceGroup" &>/dev/null; then
+  echo "Deleting resource group $resourceGroup"
+  az group delete --name "$resourceGroup"
+fi
