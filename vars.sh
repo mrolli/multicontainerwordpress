@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-declare -r name="multicontaierwp"
+declare -r name="multicontainerwp"
 declare -r location="switzerlandnorth"
 declare -r environment="dev"
 declare -r rand="001"
