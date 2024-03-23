@@ -82,3 +82,18 @@ if ! az mysql flexible-server firewall-rule show \
 else
   echo "MySQL Server Firewall Rule: $ruleName already setup."
 fi
+
+# Create WordPress Database
+wpDbName="wordpress"
+if ! az mysql flexible-server db show \
+  --resource-group "$resourceGroup" \
+  --server-name "$mysqlServerName" \
+  --database-name "$wpDbName" &>/dev/null; then
+
+  az mysql flexible-server db create \
+    --resource-group "$resourceGroup" \
+    --server-name "$mysqlServerName" \
+    --database-name "$wpDbName"
+else
+  echo "MySQL Server Database: $wpDbName already setup."
+fi
