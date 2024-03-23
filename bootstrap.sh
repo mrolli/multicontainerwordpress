@@ -10,23 +10,41 @@ script_dir="$(
 source "${script_dir}/vars.sh"
 
 # Create a resource group
-az group create \
-  --name "$resourceGroup" \
-  --location $location \
-  --tags $tags
-
-az appservice plan create \
-  --name "$appservicePlanName" \
-  --resource-group "$resourceGroup" \
-  --sku S1 \
-  --is-linux \
-  --tags $tags
+if ! az group show --name "$resourceGroup" &>/dev/null; then
+  az group create \
+    --name "$resourceGroup" \
+    --location $location \
+    --tags $tags
+else
+  echo "Resource Group: $resourceGroup already setup."
+fi
 
 # Create an App Service plan
-az webapp create \
-  --resource-group "$resourceGroup" \
-  --plan "$appservicePlanName" \
+if ! az appservice plan show \
+  --name "$appservicePlanName" \
+  --resource-group "$resourceGroup" &>/dev/null; then
+
+  az appservice plan create \
+    --name "$appservicePlanName" \
+    --resource-group "$resourceGroup" \
+    --sku S1 \
+    --is-linux \
+    --tags $tags
+else
+  echo "App Service Plan: $appservicePlanName already setup."
+fi
+
+if ! az webapp show \
   --name "$appserviceName" \
-  --multicontainer-config-type compose \
-  --multicontainer-config-file docker-compose-wordpress.yml \
-  --tags $tags
+  --resource-group "$resourceGroup" &>/dev/null; then
+
+  az webapp create \
+    --resource-group "$resourceGroup" \
+    --plan "$appservicePlanName" \
+    --name "$appserviceName" \
+    --multicontainer-config-type compose \
+    --multicontainer-config-file docker-compose-wordpress.yml \
+    --tags $tags
+else
+  echo "Web App: $appserviceName already setup."
+fi
