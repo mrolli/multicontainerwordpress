@@ -1,5 +1,30 @@
 [
   {
+    "name": "WORDPRESS_DB_HOST",
+    "slotSetting": false,
+    "value": "mysql-multicontainerwp-dev-001.mysql.database.azure.com"
+  },
+  {
+    "name": "WORDPRESS_DB_USER",
+    "slotSetting": false,
+    "value": "adminuser"
+  },
+  {
+    "name": "WORDPRESS_DB_PASSWORD",
+    "slotSetting": false,
+    "value": "My5p!3rr0Paw0rd"
+  },
+  {
+    "name": "WORDPRESS_DB_NAME",
+    "slotSetting": false,
+    "value": "wordpress"
+  },
+  {
+    "name": "MYSQL_SSL_CA",
+    "slotSetting": false,
+    "value": "BaltimoreCyberTrustroot.crt.pem"
+  },
+  {
     "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
     "slotSetting": false,
     "value": "TRUE"

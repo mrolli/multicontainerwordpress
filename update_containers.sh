@@ -9,6 +9,7 @@ script_dir="$(
 # Source bash script utilities
 source "${script_dir}/vars.sh"
 
+# Configure WordPress App Settings
 az webapp config appsettings set \
   --resource-group "$resourceGroup" \
   --name "$appserviceName" \
