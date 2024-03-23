@@ -48,3 +48,37 @@ if ! az webapp show \
 else
   echo "Web App: $appserviceName already setup."
 fi
+
+# Create a MssQL Server
+if ! az mysql flexible-server show \
+  --resource-group "$resourceGroup" \
+  --name "$mysqlServerName" &>/dev/null; then
+
+  az mysql flexible-server create \
+    --resource-group "$resourceGroup" \
+    --name "$mysqlServerName" \
+    --location $location \
+    --admin-user "$mysqlServerAdmin" \
+    --admin-password "$mysqlServerPassword" \
+    --sku-name Standard_B1s \
+    --version 5.7 \
+    --tags $tags
+else
+  echo "MySQL Server: $mysqlServerName already setup."
+fi
+
+ruleName="allowAllAzureIPs"
+if ! az mysql flexible-server firewall-rule show \
+  --resource-group "$resourceGroup" \
+  --name "$mysqlServerName" \
+  --rule-name "$ruleName" &>/dev/null; then
+
+  az mysql flexible-server firewall-rule create \
+    --name "$mysqlServerName" \
+    --resource-group "$resourceGroup" \
+    --rule-name "$ruleName" \
+    --start-ip-address 0.0.0.0 \
+    --end-ip-address 0.0.0.0
+else
+  echo "MySQL Server Firewall Rule: $ruleName already setup."
+fi
